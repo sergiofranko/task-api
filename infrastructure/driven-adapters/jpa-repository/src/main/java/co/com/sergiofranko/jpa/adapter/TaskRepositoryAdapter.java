@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -49,5 +48,24 @@ public class TaskRepositoryAdapter implements TaskGateway {
             BeanUtils.copyProperties(taskEntityResponse, task);
         }
         return task;
+    }
+
+    @Override
+    public Task update(Task task) {
+        TaskEntity taskEntity = new TaskEntity();
+        if (taskService.getById(task.getId()).isEmpty()) {
+            return null;
+        }
+        BeanUtils.copyProperties(task, taskEntity);
+        TaskEntity taskEntityResponse = taskService.update(taskEntity);
+        if (taskEntityResponse != null) {
+            BeanUtils.copyProperties(taskEntityResponse, task);
+        }
+        return task;
+    }
+
+    @Override
+    public boolean delete(long id) {
+        return taskService.delete(id);
     }
 }

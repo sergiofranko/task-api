@@ -7,4 +7,6 @@ import java.util.List;
 public interface TaskGateway {
     List<Task> getAll();
     Task save(Task task);
+    Task update(Task task);
+    boolean delete(long id);
 }

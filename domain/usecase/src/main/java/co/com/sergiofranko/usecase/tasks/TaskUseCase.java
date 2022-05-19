@@ -29,4 +29,19 @@ public class TaskUseCase {
                 ok ? "Tarea creada exitosamente" : "Tarea no pudo ser creada",
                 data);
     }
+
+    public Map<String, Object> update(Task task) {
+        Task data = taskGateway.update(task);
+        boolean ok = data != null && data.getId() != 0;
+        return UtilUseCase.responseResult(ok ? 1 : 0,
+                ok ? "Tarea editada exitosamente" : "Tarea no pudo ser editada",
+                data);
+    }
+
+    public Map<String, Object> delete (long id) {
+        boolean isDeleted = taskGateway.delete(id);
+        return UtilUseCase.responseResult(isDeleted ? 1 : 0,
+                isDeleted ? "Tarea eliminada exitosamente" : "Tarea no pudo ser eliminada",
+                null);
+    }
 }
